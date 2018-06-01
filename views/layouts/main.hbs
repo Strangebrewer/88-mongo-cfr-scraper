@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Onion Peeler</title>
+  <link rel="icon" href="/assets/images/favicon.png" type="image/png">
+</head>
+
+<body>
+
+  <!-- MODAL -->
+  <div id="my-modal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-close">&times;</span>
+        <h6 id="modal-title"></h6>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <h6 id="modal-endnote"></h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="header">
+    <header>
+      {{#if saved}}
+        {{> headers/saved-header-block}}
+      {{else}}
+        {{> headers/main-header-block}}
+      {{/if}}
+    </header>
+  </div>
+
+  <div class="main-content">
+    <ul>
+
+      {{{body}}}
+      
+    </ul>
+  </div>
+
+  <div class="footer">
+    <footer>
+      <p>
+        &#9400;Copyright 2018 Keith Allmon
+      </p>
+    </footer>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script src="/assets/js/scraper.js"></script>
+</body>
+
+</html>

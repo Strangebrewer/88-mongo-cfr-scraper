@@ -1,0 +1,23 @@
+  {{#each onion}}
+    <li class="article-li">
+      <div class="article-header-container">
+        <div class="article-header">
+          <h4 class="headline">
+            <a href="{{link}}">{{headline}}</a>
+          </h4>
+          <h6 class="datetime">{{datetime}}</h6>
+        </div>
+        <div class="article-btns">
+          {{#if saved}}
+            <button>Delete from Saved</button>
+            <button>Article Notes</button>
+          {{else}}
+            <button class="save-article" data-id="{{id}}">Save Article</button>
+          {{/if}}
+        </div>
+      </div>
+      <div class="article-summary-container">
+        <p class="summary">{{summary}}</p>
+      </div>      
+    </li>
+  {{/each}}
