@@ -4,6 +4,8 @@ module.exports = function (app) {
 
   app.get("/", controller.home);
 
+  app.get("/saved", controller.saved);
+
   app.get("/peel", controller.peel);
 
   app.post("/stick", controller.stick);
@@ -14,7 +16,7 @@ module.exports = function (app) {
 
   app.delete("/clear", controller.clearDb);
 
-  app.delete("/discard", controller.discard);
+  app.put("/discard", controller.discard);
   //  This last one might need to be a put rather than delete
   //  Depends on whether I want "saved" to be:
     // a) its own collection, or

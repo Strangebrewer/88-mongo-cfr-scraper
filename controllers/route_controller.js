@@ -5,7 +5,7 @@ var cheerio = require("cheerio");
 var exports = module.exports = {}
 
 exports.home = function (req, res) {
-  db.Article.find({})
+  db.Article.find({ saved: false })
     .then(function (data) {
 
       var renderObject = {
@@ -16,6 +16,19 @@ exports.home = function (req, res) {
     });
 }
 
+exports.saved = function (req, res) {
+  db.Article.find({ saved: true })
+    .then(function (data) {
+      var renderObject = {
+        peels: data,
+        saved: true
+      }
+
+      res.render("index", renderObject);
+
+    })
+}
+
 exports.peel = function (req, res) {
 
   var originalArticles;
@@ -23,8 +36,6 @@ exports.peel = function (req, res) {
   db.Article.find({ saved: false })
     .then(function (dbArticle) {
       originalArticles = dbArticle.length;
-
-      console.log(originalArticles);
     });
 
   request("https://www.theonion.com/", function (error, response, html) {
@@ -48,7 +59,7 @@ exports.peel = function (req, res) {
 
     });
 
-    db.Article.create(articles, function(err, newArticles) {
+    db.Article.create(articles, function (err, newArticles) {
       if (err) console.log(err);
       else console.log(newArticles);
       db.Article.find({}).then(function (data) {
@@ -62,15 +73,18 @@ exports.peel = function (req, res) {
     });
 
   });
-
-  // setTimeout(function () {
-  //   res.json(results)
-  // }, 1000);
 }
 
 exports.stick = function (req, res) {
 
-  //  Save an article
+  db.Article.update(req.body, { $set: { saved: true } })
+    .then(function (result) {
+
+      db.Article.find({ saved: false })
+        .then(function (data) {
+          res.json(data);
+        });
+    });
 
 }
 
@@ -100,5 +114,13 @@ exports.clearDb = function (req, res) {
 exports.discard = function (req, res) {
 
   //  Remove article from Saved collection
+
+  db.Article.update(req.body, { $set: { saved: false } })
+    .then(function (result) {
+      db.Article.find({ saved: true })
+        .then(function (data) {
+          res.json(data);
+        });
+    });
 
 }

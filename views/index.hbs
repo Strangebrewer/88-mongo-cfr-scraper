@@ -9,8 +9,8 @@
         </a>
         <div class="article-btns">
           {{#if saved}}
-            <button>Delete from Saved</button>
-            <button>Article Notes</button>
+            <button class="delete-article" data-id="{{id}}">Delete from Saved</button>
+            <button class="comment-btn" data-id="{{id}}">Article Notes</button>
           {{else}}
             <button class="save-article" data-id="{{id}}">Save Article</button>
           {{/if}}

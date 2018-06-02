@@ -28,5 +28,35 @@ $("#clear-btn").on("click", function () {
   $.ajax("/clear", { type: "DELETE" })
     .then(function (response) {
       console.log(response);
+      //  create modal from response.new
     });
+});
+
+$(".main-content").on("click", ".save-article", function () {
+  var articleId = $(this).data("id");
+  var removeIt = $(this).parents(".article-li");
+  $.post("/stick", { _id: articleId })
+    .then(function (data) {
+      console.log(data);
+      //  modal that article has been saved.
+      removeIt.fadeOut();
+    });
+});
+
+$(".main-content").on("click", ".delete-article", function () {
+  var articleId = $(this).data("id");
+  var removeIt = $(this).parents(".article-li");
+  $.ajax("/discard", {
+    type: "PUT",
+    data: { _id: articleId }
+  }).then(function (data) {
+    removeIt.fadeOut();
+    //  modal that article has been removed
+    console.log(data);
+  });
+
+});
+
+$(".main-content").on("click", ".comment-btn", function () {
+
 });
