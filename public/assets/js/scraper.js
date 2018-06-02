@@ -19,7 +19,14 @@ window.onclick = function (event) {
 
 $("#peel-btn").on("click", function () {
 
-  $.get("/peel").then(function(data) {
+  $.get("/peel").then(function (data) {
     console.log(data);
-  })
+  });
+});
+
+$("#clear-btn").on("click", function () {
+  $.ajax("/clear", { type: "DELETE" })
+    .then(function (response) {
+      console.log(response);
+    });
 });

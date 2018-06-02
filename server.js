@@ -14,7 +14,12 @@ var app = express();
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI).then(function (res) {
+  console.log("Connected to DB");
+})
+  .catch(function (err) {
+    console.log(err);
+  });
 
 // Use morgan logger for logging requests
 app.use(logger("dev"));
@@ -26,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 require("./routes/routes.js")(app);
 
 // Set Handlebars as the default templating engine.
-app.engine("hbs", exphbs({extname: 'hbs', defaultLayout: "main" }));
+app.engine("hbs", exphbs({ extname: 'hbs', defaultLayout: "main" }));
 app.set("view engine", "hbs");
 
 // Start the server

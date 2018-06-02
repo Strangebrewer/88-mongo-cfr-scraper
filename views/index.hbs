@@ -1,12 +1,12 @@
-  {{#each onion}}
+  {{#each peels}}
     <li class="article-li">
       <div class="article-header-container">
-        <div class="article-header">
-          <h4 class="headline">
-            <a href="{{link}}">{{headline}}</a>
-          </h4>
-          <h6 class="datetime">{{datetime}}</h6>
-        </div>
+        <a href="{{link}}" target="_blank">
+          <div class="article-header">
+            <h4 class="headline">{{title}}</h4>
+            <h6 class="datetime">{{date}}</h6>
+          </div>
+        </a>
         <div class="article-btns">
           {{#if saved}}
             <button>Delete from Saved</button>

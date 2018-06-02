@@ -12,6 +12,8 @@ module.exports = function (app) {
 
   app.post("/comment", controller.addComment);
 
+  app.delete("/clear", controller.clearDb);
+
   app.delete("/discard", controller.discard);
   //  This last one might need to be a put rather than delete
   //  Depends on whether I want "saved" to be:
