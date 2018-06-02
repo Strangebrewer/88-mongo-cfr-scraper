@@ -6,7 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Onion Peeler</title>
-  <link rel="icon" href="/assets/images/favicon.png" type="image/png">
+  <link rel="icon" href="/assets/images/favicon.png" type="image/png"> {{!--
+  <link rel="stylesheet" href="/assets/css/reset.css"> --}}
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/modal.css">
 </head>
 
 <body>
@@ -17,23 +20,42 @@
     <div class="modal-content">
       <div class="modal-header">
         <span class="modal-close">&times;</span>
-        <h6 id="modal-title"></h6>
+        <h3 id="modal-title"></h3>
       </div>
       <div class="modal-body">
       </div>
       <div class="modal-footer">
-        <h6 id="modal-endnote"></h6>
+        <h3 id="modal-endnote"></h3>
       </div>
     </div>
   </div>
 
+  <div id="loading-modal" class="modal">
+    <!-- Modal content -->
+    <div class="loading-modal-content">
+      <div class="loading-modal-body">
+      </div>
+    </div>
+  </div>
+
+  <img src="" alt="">
+
   <div class="header">
     <header>
+      <h1>Onion Peeler</h1>
       {{#if saved}}
-        {{> headers/saved-header-block}}
+      <p>Your Saved Articles</p>
       {{else}}
-        {{> headers/main-header-block}}
+      <p>All the news that's fit to peel.</p>
       {{/if}}
+      <div class="nav-div">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/saved" class="nav-link">Saved Articles</a>
+        {{#unless saved}}
+        <button class="nav-btn" id="peel-btn">Peel</button>
+        {{/unless}}
+        <button class="nav-btn" id="clear-btn">Clear All</button>
+      </div>
     </header>
   </div>
 
@@ -41,7 +63,7 @@
     <ul>
 
       {{{body}}}
-      
+
     </ul>
   </div>
 

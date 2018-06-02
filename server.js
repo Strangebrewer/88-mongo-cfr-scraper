@@ -25,6 +25,7 @@ mongoose.connect(MONGODB_URI).then(function (res) {
 app.use(logger("dev"));
 // Use body-parser for handling form submissions
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 // Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static(path.join(__dirname, 'public')));
 
