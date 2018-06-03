@@ -5,7 +5,6 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
 var mongoose = require("mongoose");
-var logger = require("morgan");
 var exphbs = require("express-handlebars");
 var db = require("./models");
 var PORT = process.env.PORT || 3000;
@@ -21,8 +20,6 @@ mongoose.connect(MONGODB_URI).then(function (res) {
     console.log(err);
   });
 
-// Use morgan logger for logging requests
-app.use(logger("dev"));
 // Use body-parser for handling form submissions
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
