@@ -1,23 +1,23 @@
-  {{#each peels}}
+  {{#each articles}}
     <li class="article-li">
-      <div class="article-header-container">
-        <a href="{{link}}" target="_blank">
-          <div class="article-header">
-            <h4 class="headline">{{title}}</h4>
-            <h6 class="datetime">{{date}}</h6>
-          </div>
-        </a>
+      <div class="article-header-container">        
+        <div class="article-header">
+          <h4 class="topic">
+            <a href="https://www.cfr.org{{topic_link}}" target="_blank">{{topic}}</a>
+          </h4>
+          <h3 class="headline">
+            <a href="{{link}}" target="_blank">{{title}}</a>
+          </h3>
+          <p>{{date}}</p>
+        </div>        
         <div class="article-btns">
           {{#if saved}}
-            <button class="delete-article" data-id="{{id}}">Delete from Saved</button>
-            <button class="comment-btn" data-id="{{id}}">Article Notes</button>
+            <button class="delete-article article-btn" data-id="{{id}}">Delete from Saved</button>
+            <button class="comment-btn article-btn" data-id="{{id}}">Article Notes</button>
           {{else}}
-            <button class="save-article" data-id="{{id}}">Save Article</button>
+            <button class="save-article article-btn" data-id="{{id}}">Save Article</button>
           {{/if}}
         </div>
-      </div>
-      <div class="article-summary-container">
-        <p class="summary">{{summary}}</p>
       </div>
       <div class="notes-container" id="{{id}}-notes-container"></div>   
     </li>

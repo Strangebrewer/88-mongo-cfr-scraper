@@ -6,13 +6,15 @@ module.exports = function (app) {
 
   app.get("/saved", controller.saved);
 
-  app.get("/peel", controller.peel);
+  app.get("/scrape", controller.scrape);
 
-  app.post("/stick", controller.stick);
+  app.post("/stick", controller.sticky);
 
   app.get("/comments", controller.seeComments);
 
-  app.post("/comment", controller.addComment);
+  app.post("/add/comment", controller.addComment);
+
+  app.delete("/delete/comment", controller.deleteComment);
 
   app.delete("/clear", controller.clearDb);
 

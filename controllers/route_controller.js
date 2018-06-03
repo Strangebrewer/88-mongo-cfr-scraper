@@ -10,7 +10,7 @@ exports.home = function (req, res) {
     .then(function (data) {
 
       var renderObject = {
-        peels: data
+        articles: data
       }
 
       res.render("index", renderObject);
@@ -24,7 +24,7 @@ exports.saved = function (req, res) {
     .then(function (data) {
 
       var renderObject = {
-        peels: data,
+        articles: data,
         saved: true
       }
 
@@ -33,7 +33,7 @@ exports.saved = function (req, res) {
 
 }
 
-exports.peel = function (req, res) {
+exports.scrape = function (req, res) {
 
   var originalArticles;
 
@@ -42,20 +42,23 @@ exports.peel = function (req, res) {
       originalArticles = dbArticle.length;
     });
 
-  request("https://www.theonion.com/", function (error, response, html) {
+  request("https://www.cfr.org/in-the-news", function (error, response, html) {
 
     var articles = [];
 
     var $ = cheerio.load(html);
 
-    $(".postlist__item").each(function (i, element) {
+    $(".landing-cards-grid__list-item").each(function (i, element) {
 
       var article = {};
 
-      article.title = $(element).find(".headline").text();
-      article.link = $(element).find("a.js_entry-link").attr("href");
-      article.date = $(element).find(".js_publish_time").attr("title");
-      article.summary = $(element).find(".entry-summary p").text();
+      article.title = $(element).find(".card-article__title").text();
+      article.link = $(element).find(".card-article__link").attr("href");
+      article.date = $(element).find(".card-article__date").text().trim();
+      article.topic = $(element).find(".card-article__topic-tag").text().trim();
+      article.topic_link = $(element).find(".card-article__topic-tag-link").attr("href");
+
+      console.log(article);
 
       if (article.title !== "") {
         articles.push(article);
@@ -66,21 +69,22 @@ exports.peel = function (req, res) {
     db.Article.create(articles, function (err, newArticles) {
       if (err) console.log(err);
       else console.log(newArticles);
-      db.Article.find({ saved: false }).then(function (data) {
-        var articleObj = {
-          new: data.length - originalArticles,
-          peels: data
-        }
+      db.Article.find({ saved: false })
+        .then(function (data) {
+          var articleObj = {
+            new: data.length - originalArticles,
+            articles: data
+          }
 
-        res.json(articleObj);
-      })
+          res.json(articleObj);
+        })
     });
 
   });
 
 }
 
-exports.stick = function (req, res) {
+exports.sticky = function (req, res) {
 
   db.Article.update(req.body, { $set: { saved: true } })
     .then(function (result) {
@@ -90,9 +94,10 @@ exports.stick = function (req, res) {
 }
 
 exports.seeComments = function (req, res) {
+  console.log(req.query);
 
-  db.Article.findOne(req.body)
-    .populate("note")
+  db.Article.findOne(req.query)
+    .populate("notes")
     .then(function (dbArticle) {
       res.json(dbArticle);
     })
@@ -104,13 +109,30 @@ exports.seeComments = function (req, res) {
 
 exports.addComment = function (req, res) {
 
-  console.log(req.body);
-
   db.Note.create({ body: req.body.note })
     .then(function (dbNote) {
       return db.Article.findOneAndUpdate(
         { _id: req.body.id },
-        { $push: { note: dbNote._id } },
+        { $push: { notes: dbNote._id } },
+        { new: true }
+      )
+    })
+    .then(function (dbArticle) {
+      res.json(dbArticle);
+    })
+    .catch(function (err) {
+      res.json(err);
+    });
+
+}
+
+exports.deleteComment = function (req, res) {
+
+  db.Note.deleteOne({ _id: req.body.noteId })
+    .then(function (err, dbNote) {
+      return db.Article.findOneAndUpdate(
+        { _id: req.body.articleId },
+        { $pull: { notes: req.body.noteId } },
         { new: true }
       )
     })

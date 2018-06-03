@@ -5,11 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Onion Peeler</title>
-  <link rel="icon" href="/assets/images/favicon.png" type="image/png"> {{!--
-  <link rel="stylesheet" href="/assets/css/reset.css"> --}}
+  <title>CFR Scraper</title>
+  <link rel="icon" href="/assets/images/kallisti-circle.png" type="image/png">
+  <link rel="stylesheet" href="/assets/css/reset.css">
   <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="stylesheet" href="/assets/css/modal.css">
+  <link rel="stylesheet" href="/assets/css/media.css">
 </head>
 
 <body>
@@ -30,7 +31,7 @@
     </div>
   </div>
 
-  <div id="loading-modal" class="modal">
+  <div id="loading-modal" class="loading-modal">
     <!-- Modal content -->
     <div class="loading-modal-content">
       <div class="loading-modal-body">
@@ -38,29 +39,28 @@
     </div>
   </div>
 
-  <img src="" alt="">
-
   <div class="header">
     <header>
-      <h1>Onion Peeler</h1>
+      <h1><a href="https://www.cfr.org" target="_blank">Council on Foreign Relations</a></h1>      
+      <h2><a href="https://www.cfr.org/in-the-news" target="_blank">In the News</a></h2>
       {{#if saved}}
-      <p>Your Saved Articles</p>
+      <h6 class="saved-h6">Your Saved Articles.</h6>
       {{else}}
-      <p>All the news that's fit to peel.</p>
+      <h6>"Media appearances, published opinions, and academic articles by CFR fellows and experts."</h6>
       {{/if}}
-      <div class="nav-div">
-        <a href="/" class="nav-link">Home</a>
-        <a href="/saved" class="nav-link">Saved Articles</a>
-        {{#unless saved}}
-        <button class="nav-btn" id="peel-btn">Peel</button>
-        {{/unless}}
-        <button class="nav-btn" id="clear-btn">Clear All</button>
-      </div>
     </header>
   </div>
 
   <div class="main-content">
-    <ul>
+    <div class="nav-div">
+      <a href="/" class="nav-btn">Home</a>
+      <a href="/saved" class="nav-btn">Saved Articles</a>
+        {{#unless saved}}
+        <button class="nav-btn" id="scrape-btn">Scrape</button>
+        {{/unless}}
+    </div>
+
+    <ul class="article-ul">
 
       {{{body}}}
 
