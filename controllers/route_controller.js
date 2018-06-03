@@ -58,8 +58,6 @@ exports.scrape = function (req, res) {
       article.topic = $(element).find(".card-article__topic-tag").text().trim();
       article.topic_link = $(element).find(".card-article__topic-tag-link").attr("href");
 
-      console.log(article);
-
       if (article.title !== "") {
         articles.push(article);
       }
@@ -94,7 +92,6 @@ exports.sticky = function (req, res) {
 }
 
 exports.seeComments = function (req, res) {
-  console.log(req.query);
 
   db.Article.findOne(req.query)
     .populate("notes")
@@ -142,18 +139,6 @@ exports.deleteComment = function (req, res) {
     .catch(function (err) {
       res.json(err);
     });
-
-}
-
-exports.clearDb = function (req, res) {
-
-  db.Article.remove({}).then(function (results) {
-    console.log(results);
-  });
-
-  db.Note.remove({}).then(function (result) {
-    console.log(result);
-  });
 
 }
 

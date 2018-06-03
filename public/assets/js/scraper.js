@@ -23,19 +23,21 @@ $("#scrape-btn").on("click", function () {
   $(".loading-modal-body").html(`<img src="/assets/images/loading.gif">`);
   loading.style.display = "block";
   $.get("/scrape").then(function (data) {
-    console.log(data);
     if (data.new === 0) {
       loading.style.display = "none";
+      $("#modal-title").html("Try Again Later.");
       $(".modal-body").html(`<p>No new articles.</p>`);
       modal.style.display = "block";
     }
     else if (data.new === 1) {
       loading.style.display = "none";
+      $("#modal-title").html("Success!");
       $(".modal-body").html(`<p>1 new article added.</p>`);
       modal.style.display = "block";
     }
     else {
       loading.style.display = "none";
+      $("#modal-title").html("Success!");
       $(".modal-body").html(`<p>${data.new} new articles added.</p>`);
       modal.style.display = "block";
     }
@@ -66,19 +68,11 @@ $("#scrape-btn").on("click", function () {
   });
 });
 
-$("#clear-btn").on("click", function () {
-  $.ajax("/clear", { type: "DELETE" })
-    .then(function (response) {
-      console.log(response);
-    });
-});
-
 $(".main-content").on("click", ".save-article", function () {
   var articleId = $(this).data("id");
   var removeIt = $(this).parents(".article-li");
   $.post("/stick", { _id: articleId })
     .then(function (data) {
-      console.log(data);
       $("#modal-title").html("Success!");
       $(".modal-body").html(
         `<p>Article has been saved.</p>`
@@ -97,12 +91,10 @@ $(".main-content").on("click", ".delete-article", function () {
   }).then(function (data) {
     removeIt.fadeOut();
     $("#modal-title").html("Success!");
-    // loading.style.display = "none";
     $(".modal-body").html(
       `<p>Article has been removed from your saved list.</p>`
     );
     modal.style.display = "block";
-    console.log(data);
   });
 
 });
@@ -111,10 +103,8 @@ $(".main-content").on("click", ".comment-btn", function () {
   var articleId = $(this).data("id");
   var getObj = { _id: `${articleId}` };
 
-  console.log(getObj);
   $.get("/comments", getObj)
     .then(function (data) {
-      console.log(data);
       var noteHeading = $(`<h3>Notes</h3>`);
       var noteContainer = $(`#${data._id}-notes-container`);
       noteContainer.html(noteHeading);
@@ -159,7 +149,6 @@ $(".main-content").on("click", ".delete-note-btn", function () {
     type: 'DELETE',
     data: deleteObj
   }).then(function (data) {
-    console.log(data);
   })
 })
 
@@ -175,6 +164,5 @@ $(".main-content").on("click", ".add-note", function (e) {
 
   $.post("/add/comment", noteObject)
     .then(function (data) {
-      console.log(data);
     });
 });
