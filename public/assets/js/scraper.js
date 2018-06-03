@@ -1,5 +1,4 @@
 // MODAL FUNCTIONALITY
-// Get the modal
 var modal = document.getElementById('my-modal');
 
 var loading = document.getElementById('loading-modal');
