@@ -24,6 +24,7 @@ $("#scrape-btn").on("click", function () {
   $.get("/scrape").then(function (data) {
     console.log(data);
     if (data.new === 0) {
+      $(".article-ul").html(""); 
       loading.style.display = "none";
       $("#modal-title").html("Try Again Later.");
       $(".modal-body").html(`<p>No new articles.</p>`);
