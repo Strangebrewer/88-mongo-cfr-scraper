@@ -16,8 +16,6 @@ module.exports = function (app) {
 
   app.delete("/delete/comment", controller.deleteComment);
 
-  app.delete("/clear", controller.clearDb);
-
   app.put("/discard", controller.discard);
 
 }

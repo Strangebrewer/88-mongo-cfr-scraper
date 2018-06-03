@@ -23,6 +23,7 @@ $("#scrape-btn").on("click", function () {
   $(".loading-modal-body").html(`<img src="/assets/images/loading.gif">`);
   loading.style.display = "block";
   $.get("/scrape").then(function (data) {
+    console.log(data);
     if (data.new === 0) {
       loading.style.display = "none";
       $("#modal-title").html("Try Again Later.");
@@ -30,12 +31,14 @@ $("#scrape-btn").on("click", function () {
       modal.style.display = "block";
     }
     else if (data.new === 1) {
+      $(".article-ul").html(""); 
       loading.style.display = "none";
       $("#modal-title").html("Success!");
       $(".modal-body").html(`<p>1 new article added.</p>`);
       modal.style.display = "block";
     }
     else {
+      $(".article-ul").html(""); 
       loading.style.display = "none";
       $("#modal-title").html("Success!");
       $(".modal-body").html(`<p>${data.new} new articles added.</p>`);
@@ -63,7 +66,7 @@ $("#scrape-btn").on("click", function () {
           <div class="notes-container" id="${element._id}-notes-container"></div>   
         </li>
       `);
-      $(".article-ul").prepend(article);      
+      $(".article-ul").append(article);      
     }
   });
 });

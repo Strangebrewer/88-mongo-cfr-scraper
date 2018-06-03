@@ -52,7 +52,7 @@ exports.scrape = function (req, res) {
 
       var article = {};
 
-      article.title = $(element).find(".card-article__title").text();
+      article.title = $(element).find(".card-article__title").text().trim();
       article.link = $(element).find(".card-article__link").attr("href");
       article.date = $(element).find(".card-article__date").text().trim();
       article.topic = $(element).find(".card-article__topic-tag").text().trim();
